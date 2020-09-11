@@ -1,0 +1,49 @@
+---
+title: "HW1"
+author: "Dorothy Gay, Monica Martinez-Raga, Patrick Sinclair"
+date: "9/11/2020"
+output: html_document
+---
+We set up the directory to access the PUMS data file. 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_knit$set(root.dir = "")
+getwd()
+load("acs2017_ny_data.RData")
+acs2017_ny[1:10,1:7]
+attach(acs2017_ny)
+```
+Below is a summary of all the data.
+```{r}
+summary(acs2017_ny)
+```
+The following code shows there are 196,585 in the dataset.
+```{r}
+print(NN_obs <- length(AGE))
+```
+The average age of women in NYC is 42.7 years.
+```{r}
+summary(AGE[female == 1])
+```
+The average age of men in NYC is 40.4 years.
+```{r}
+summary(AGE[!female])
+```
+Alternatives ways to access summary figures:
+Female age statistics
+```{r}
+mean(AGE[female == 1])
+sd(AGE[female == 1])
+```
+Male age statistics
+```{r}
+mean(AGE[!female])
+sd(AGE[!female])
+```
+For the purpose of exploring interesting statistics in the data, we wanted to find out the differences between levels of education among men and women. The results indicate that more women hold degrees than men at all levels, as well as more men did not finish highshool.
+```{r}
+educ_indx <- factor((educ_nohs + 2*educ_hs + 3*educ_somecoll + 4*educ_college + 5*educ_advdeg), levels=c(1,2,3,4,5),labels = c("No HS","HS","SmColl","Bach","Adv"))
+table(educ_indx,female)
+```
+
+
