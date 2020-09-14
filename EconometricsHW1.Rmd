@@ -4,7 +4,6 @@ author: "Dorothy Gay, Monica Martinez-Raga, Patrick Sinclair"
 date: "9/11/2020"
 output: html_document
 ---
-We set up the directory to access the PUMS data file. 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 knitr::opts_knit$set(root.dir = "")
@@ -12,7 +11,54 @@ getwd()
 load("acs2017_ny_data.RData")
 acs2017_ny[1:10,1:7]
 attach(acs2017_ny)
+die <- 1:6
+dice <- sample(die, size = 20, replace = TRUE)
+roll <- function(){
+  dice <- sample(die, size = 20, replace = TRUE)
+  dice
+}
 ```
+#### Question 3 - Dice Roll
+**Part 1 - A Fair Die**  
+By setting the interval 1:6 as an R Object **die**, we were able to write a function
+that generates a random sample of numbers from the interval. We allowed the sample to replace outcomes so the function simulates a roll of a fair die and set the sample size to 20. 
+
+```{r fair die, echo=TRUE}
+# die <- 1:6
+# dice <- sample(die, size = 20, replace = TRUE)
+# roll <- function(die = 1:6){
+#     dice <- sample(die, size = 20, replace = TRUE)
+#     dice
+# }
+```
+The command **dice** will produce the same set of randomly generated numbers each time it is executed. If we wish to view different outcomes, we can execute the function **roll**.
+```{r fair die 2, echo=TRUE}
+dice
+roll()
+```
+Using classical probability, we would expect to see a 6 from the roll of a fair die 1/6 times. For 20 trials, we would expect 6 to be the result 20*(1/6) = 3.33 times. 
+
+In our **dice** trial, we saw a 6 on 4 occasions, or 1/5 times.
+
+**Part 2 - Adjusted Dice**
+
+To adjust our die, we created a new function for sampling the object "die" and adjusted the probability within the function. Initially we had changed the sample size and prevented the sample from replacing outcomes but adjusting the probability of each outcome made for a more challenging and interesting learning experience!
+
+```{r large sample space, echo=TRUE}
+# rollw <- function(die = 1:6){
+#   dice <- sample(die, size = 20, replace = TRUE, prob = c(1/10, 1/10, 1/10, 1/10, 1/10, 1/2))
+#   dice
+#   }
+# dicew <- sample(die, size = 20, replace = TRUE, prob = c(1/10, 1/10, 1/10, 1/10, 1/10, 1/2)) 
+```
+
+As with our fair die, the object *dicew* will return the same set of weighted outcomes. *rollw* will produce a new set of outcomes each time it is executed.  
+
+In *dicew*, the probability of rolling a 6 has been adjusted to 1/2, well above the probability of 1/6 for a fair die. We would expect to see a 6 rolled 10 times in 20 trials. The results from *dicew* showed 6 appearing 9 times out of 20, just below what we expected but more than twice as often as we saw in out **dice** trial.
+
+#### Question 4 - PUMS Data
+We set up the directory to access the PUMS data file. 
+
 Below is a summary of all the data.
 ```{r}
 summary(acs2017_ny)
