@@ -21,13 +21,6 @@ roll <- function(){
   dice <- sample(die, size = 20, replace = TRUE)
   dice
 }
-```
-## Question 3 - Dice Roll
-### Part 1 - A Fair Die
-By setting the interval 1:6 as an R Object **die**, we were able to write a function
-that generates a random sample of numbers from the interval. We allowed the sample to replace outcomes so the function simulates a roll of a fair die and set the sample size to 20. 
-
-```{r fair die, echo=TRUE}
 rollw <- function(die = 1:6){
   dice <- sample(die, size = 20, replace = TRUE,
   prob = c(1/10, 1/10, 1/10, 1/10, 1/10, 1/2))
@@ -36,6 +29,11 @@ rollw <- function(die = 1:6){
 dicew <- sample(die, size = 20, replace = TRUE,
   prob = c(1/10, 1/10, 1/10, 1/10, 1/10, 1/2))
 ```
+## Question 3 - Dice Roll
+### Part 1 - A Fair Die
+By setting the interval 1:6 as an R Object **die**, we were able to write a function
+that generates a random sample of numbers from the interval. We allowed the sample to replace outcomes so the function simulates a roll of a fair die and set the sample size to 20. 
+
 The command **dice** will produce the same set of randomly generated numbers each time it is executed. If we wish to view different outcomes, we can execute the function **roll**.
 ```{r fair die 2, echo=TRUE}
 dice
@@ -49,7 +47,7 @@ In our **dice** trial, we saw a 6 on 4 occasions, or 1/5 times.
 
 To adjust our die, we created a new function for sampling the object "die" and adjusted the probability within the function. Initially we had changed the sample size and prevented the sample from replacing outcomes but adjusting the probability of each outcome made for a more challenging and interesting learning experience!
 
-```{r large sample space, echo=TRUE}
+```{r, echo=TRUE}
 # rollw <- function(die = 1:6){
 #   dice <- sample(die, size = 20, replace = TRUE, prob = c(1/10, 1/10, 1/10, 1/10, 1/10, 1/2))
 #   dice
