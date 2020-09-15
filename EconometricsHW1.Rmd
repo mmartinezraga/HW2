@@ -28,12 +28,13 @@ By setting the interval 1:6 as an R Object **die**, we were able to write a func
 that generates a random sample of numbers from the interval. We allowed the sample to replace outcomes so the function simulates a roll of a fair die and set the sample size to 20. 
 
 ```{r fair die, echo=TRUE}
-# die <- 1:6
-# dice <- sample(die, size = 20, replace = TRUE)
-# roll <- function(die = 1:6){
-#     dice <- sample(die, size = 20, replace = TRUE)
-#     dice
-# }
+rollw <- function(die = 1:6){
+  dice <- sample(die, size = 20, replace = TRUE,
+  prob = c(1/10, 1/10, 1/10, 1/10, 1/10, 1/2))
+  dice
+  }
+dicew <- sample(die, size = 20, replace = TRUE,
+  prob = c(1/10, 1/10, 1/10, 1/10, 1/10, 1/2))
 ```
 The command **dice** will produce the same set of randomly generated numbers each time it is executed. If we wish to view different outcomes, we can execute the function **roll**.
 ```{r fair die 2, echo=TRUE}
@@ -58,6 +59,12 @@ To adjust our die, we created a new function for sampling the object "die" and a
 
 As with our fair die, the object *dicew* will return the same set of weighted outcomes. *rollw* will produce a new set of outcomes each time it is executed.  
 
+```{r}
+dicew
+rollw()
+```
+
+
 In *dicew*, the probability of rolling a 6 has been adjusted to 1/2, well above the probability of 1/6 for a fair die. We would expect to see a 6 rolled 10 times in 20 trials. The results from *dicew* showed 6 appearing 9 times out of 20, just below what we expected but more than twice as often as we saw in out **dice** trial.
 
 ## Question 4 - PUMS Data
@@ -78,7 +85,7 @@ The mean age of men in NYC is 40.35 years.
 ```{r}
 summary(AGE[!female])
 ```
-Alternatives ways to access summary figures:
+Alternative ways to access summary figures:
 Female age statistics
 ```{r}
 mean(AGE[female == 1])
@@ -161,3 +168,6 @@ ReturnsBasedOnHistory
 Based on the data from SP500 spanning from February 20, 2020 - September 1, 2020, we notice that the day after a positive return, the mean return is strongly negative. However, the day after two positive returns, the mean return comes up slightly back to positive. Similarly, the day after a negative return, the mean return is starkly positive but after two days the positivity of the return decreases. From here we can infer that with a larger sample size, the returns based on historical movement begin to normalize, approaching the mean of the entire time frame's return of 0.1786.
 
 The time frame we chose was remarkably volatile. During this time, we can define short-term investment as investment based on one day's historical data and longer term investment as based on historical data of greater than one day. According to the Hot Hands Fallacy, short term investors may perceive the market's movement as "hot" if the previous day's returns were either wildly positive or negative, depending on whether they were choosing to buy or sell in relation to the market's movements. According to our data, if they were to act on this perception of a "hot" movement in the short term, they would benefit from the hot hands fallacy so long as they made their moves within the day. However, if they acted on the perception over a period of days, their returns in either direction would have gone down over the amount of time in which they held. Similarly, a long-term investor may be lured by the prospect of making moves and the perception of a "hot" deal, but they were found not to have lost tremendously nor gained tremendously if they were to wait out the high market volatility as the returns approach the slightly positive 9 month mean over time.
+
+### Part 5 - A question for discussion:
+Given institutions have greater ability to be selective in making their predictions when assessing streaks in the market, are they able to leverage trading large volumes to manipulate whether positive return streaks continue or cease?
