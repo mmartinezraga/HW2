@@ -65,6 +65,8 @@ rollw()
 
 In *dicew*, the probability of rolling a 6 has been adjusted to 1/2, well above the probability of 1/6 for a fair die. We would expect to see a 6 rolled 10 times in 20 trials. The results from *dicew* showed 6 appearing 9 times out of 20, just below what we expected but more than twice as often as we saw in out **dice** trial.
 
+The code used to create the dice trials was written from   Grolemund, Garrett (2014). Hands-On Programming with R, 1st edition, Sebastopol: O'Reilly Media.
+
 ## Question 4 - PUMS Data
 ### Part 1 - Replicating Commands from R Basics for Lecture I
 Below is a summary of all the data.
