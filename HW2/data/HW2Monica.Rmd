@@ -1,0 +1,338 @@
+---
+title: "HW2"
+author: "M.Martinez-Raga"
+date: "9/14/2020"
+output: html_document
+---
+
+A single die has a sample space of 6 outcomes that are all mutually exclusive. For the purpose of this lab, we are focusing on calculating and testing the probability of the die being fixed toward 6. Theoretically, there is a 1/6, or 16.667%, probability of the die being judged unfair and a 5/6, or 83.333%, probability of the die being judged fair. 
+
+Null hypothesis (Ho): Our die is fair, not fixed to 6.
+Alternative hypothesis (Ha): Our die is unfair, fixed to 6.
+
+______
+
+PP1
+
+For our first possible protocol, our number of trials (n) is 1. The rule is as follows: If we get a 6 after a single roll, we are deeming the die unfair. Any other number will be deemed fair. The probability of our null hypothesis being accepted or rejected are 5/6 and 1/6, respectively.
+
+The standard error for this trial will be 0.3727, where n = 1 and p = 1/6.
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+dice.roll <- sample(1:6, size = 1, replace = TRUE)
+dice.roll
+ifelse(dice.roll == 6, "UNFAIR","FAIR")
+```
+
+For PP1, we got a 6 in one roll, deeming the dice unfair. We accept the reject the null hypothesis for PP1.
+
+______
+
+
+PP2
+
+For our second possible protocol, our number of trials (n) is 30. We used a 99% confidence interval to determine the range of occurences of 6 where the die would still be considered fair. Anything past that range, will be deemed unfair. We chose 99% confidence because the sample size is so small that any additional unit of deviation can misledingly deem the die unfair, therefore we want a more lenient range. 
+
+Below we determine expected occurences of 6 in a trial of 30 rolls.
+```{r}
+theoretical_prob = 1/6
+n_pp2 = 30
+occurences_pp2 = theoretical_prob * n_pp2
+occurences_pp2
+```
+
+
+Now, we determine standard error for this trial.
+```{r}
+se_pp2 = sqrt(n_pp2*(theoretical_prob*(1-theoretical_prob)))
+se_pp2
+```
+
+In order to determine the range of fair occurences of 6 with confidence level of 99%, we use a z-score of 2.576.
+```{r}
+z_99 = 2.576
+distance_pp2 = se_pp2 * z_99
+floor_pp2 = occurences_pp2 - distance_pp2
+ceiling_pp2 = occurences_pp2 + distance_pp2
+range_pp2 = c(floor_pp2, ceiling_pp2)
+range_pp2
+```
+
+If a fair die is rolled 30 times, the likely amount of occurences for 6 should be between 0 and 10 times. We will reject Ho if 6 is drawn above 10 times. *should we use 95% to standardize with other trials? z = 1.96, range = 1-9.*
+
+Below is the graphical binomial distribution of PP2.
+```{r}
+success <- 0:30
+
+plot(success,dbinom(success,size=30,prob=.1667),
+     type='h',
+     main='Binomial Distribution (n = 30, p = 1/6)',
+     ylab='Probability',
+     xlab ='# Occurences',
+     lwd=3)
+```
+Hypothesis test PP2: 
+```{r}
+dice.roll <- sample(1:6, size = 30, replace = TRUE)
+test_pp2 <- table(dice.roll)
+test_pp2
+```
+
+Given an outcome of 4 occurences of 6, we accept the null hypothesis for PP2. All other sides also had an outcome within the range of 0 and 10.
+
+
+______
+
+
+PP3
+
+For our third possible protocol, our number of trials (n) is 100. We used a 98% confidence interval to determine the range of occurences of 6 where the die would still be considered fair. Anything past that range, will be deemed unfair. We chose 98% confidence because the sample size is bigger than PP2, however we expect it to be far from the theoretical. 
+
+Below we determine expected occurences of 6 in a trial of 100 rolls.
+```{r}
+theoretical_prob = 1/6
+n_pp3 = 100
+occurences_pp3 = theoretical_prob * n_pp3
+occurences_pp3
+```
+Now, we determine standard error for this trial.
+```{r}
+se_pp3 = sqrt(n_pp3*(theoretical_prob*(1-theoretical_prob)))
+se_pp3
+```
+
+In order to determine the range of fair occurences of 6 with confidence level of 98%, we use a z-score of 2.326.
+```{r}
+z_98 = 2.326
+distance_pp3 = se_pp3 * z_98
+floor_pp3 = occurences_pp3 - distance_pp3
+ceiling_pp3 = occurences_pp3 + distance_pp3
+range_pp3 = c(floor_pp3, ceiling_pp3)
+range_pp3
+```
+
+If a fair die is rolled 100 times, the likely amount of occurences for 6 should be between 8 and 25 times. We will reject Ho if 6 is drawn above 25 times. *should we use 95% to standardize with other trials?*
+
+Below is the graphical binomial distribution of PP3.
+```{r}
+success <- 0:100
+
+plot(success,dbinom(success,size=100,prob=.1667),
+     type='h',
+     main='Binomial Distribution (n = 100, p = 1/6)',
+     ylab='Probability',
+     xlab ='# Occurences',
+     lwd=3)
+```
+
+Hypothesis test PP3: 
+```{r}
+dice.roll <- sample(1:6, size = 100, replace = TRUE)
+test_pp3 <- table(dice.roll)
+test_pp3
+```
+
+Given an outcome of 12 occurences of 6, we accept the null hypothesis for PP3. In fact, all other sides had an outcome within the range of 8 and 25.
+
+______
+
+EP
+
+For our experimental protocol, we want to roll our dice enough times so that 6 has occurences much closer to the theoretical mean of 16.7%. We have chosen to prove this by dramatically increasing the sample size. The confidence levels were also decreased proportionally to prove that the values  after time will continue staying within range. Each EP will be run 3 times. Our hypothesis remain the same. The following is the summary of EPs.
+(EP1) n: 1,000, confidence: 95% 
+(EP2) n: 10,000, 90%
+(EP3) n: 100,000x, 68%
+
+
+EP1
+For EP1, we will repeat the procedure of our possible protocols, while changing rolls to 1,000 and our confidence level to 95%.
+
+Below we determine expected occurences of 6 in a trial of 1,000 rolls.
+```{r}
+n_ep1 = 1000
+occurences_ep1 = theoretical_prob * n_ep1
+occurences_ep1
+```
+Now, we determine standard error for this trial.
+```{r}
+se_ep1 = sqrt(n_ep1*(theoretical_prob*(1-theoretical_prob)))
+se_ep1
+```
+
+In order to determine the range of fair occurences of 6 with confidence level of 95%, we use a z-score of 1.96.
+```{r}
+z_95 = 1.96
+distance_ep1 = se_ep1 * z_95
+floor_ep1 = occurences_ep1 - distance_ep1
+ceiling_ep1 = occurences_ep1 + distance_ep1
+range_ep3 = c(floor_ep1, ceiling_ep1)
+range_ep3
+```
+
+If a fair die is rolled 1,000 times, the likely amount of occurences for 6 should be between 143 and 190 times. We will reject Ho if 6 is drawn above 190 times. *should we use 95% to standardize with other trials?*
+
+Below is the graphical binomial distribution of EP1.
+```{r}
+success <- 0:1000
+
+plot(success,dbinom(success,size=1000,prob=.1667),
+     type='h',
+     main='Binomial Distribution (n = 1000, p = 1/6)',
+     ylab='Probability',
+     xlab ='# Occurences',
+     lwd=3)
+```
+
+Hypothesis test EP1: 
+```{r}
+dice.roll <- sample(1:6, size = 1000, replace = TRUE)
+test_ep1 <- table(dice.roll)
+test_ep1
+```
+
+Given an outcome of 181 occurences of 6, we accept the null hypothesis for EP1. All other sides had an outcome within the range of 143 and 190. However, it was a close call, so we will run the test again, with a 90% confidence to see if 1000 rolls is a large enough number to tighten our range.
+
+Hypothesis test EP1 2.0, with confidence interval 90%.
+```{r}
+z_90 = 1.645
+distance_ep1 = se_ep1 * z_90
+floor_ep1 = occurences_ep1 - distance_ep1
+ceiling_ep1 = occurences_ep1 + distance_ep1
+range_ep1 = c(floor_ep1, ceiling_ep1)
+range_ep1
+```
+
+Our first test for EP1 would've still been accepted (barely though). We will roll our dice again to see if it stands of another test.
+```{r}
+dice.roll <- sample(1:6, size = 1000, replace = TRUE)
+test_ep1 <- table(dice.roll)
+test_ep1
+```
+
+Indeed, in this test, we still accept the null hypothesis for number 6. However, 5 rolled a number of occurences below our 90% confidence interval. This shows that this sample number is still too small and overrepresents the theoretical mean.
+
+
+______
+
+
+EP2
+For EP2, we will repeat the procedure of for EP1 protocols, while changing rolls to 10,000 to test the confidence level of 90% which seemed to be too conservative for 1,000 rolls.
+
+Below we determine expected occurences of 6 in a trial of 10,000 rolls.
+```{r}
+n_ep2 = 10000
+occurences_ep2 = theoretical_prob * n_ep2
+occurences_ep2
+```
+Now, we determine standard error for this trial.
+```{r}
+se_ep2 = sqrt(n_ep2*(theoretical_prob*(1-theoretical_prob)))
+se_ep2
+```
+
+In order to determine the range of fair occurences of 6 with confidence level of 90%, we use a z-score of 1.645.
+```{r}
+z_90 = 1.645
+distance_ep2 = se_ep2 * z_90
+floor_ep2 = occurences_ep2 - distance_ep2
+ceiling_ep2 = occurences_ep2 + distance_ep2
+range_ep2 = c(floor_ep2, ceiling_ep2)
+range_ep2
+```
+
+If a fair die is rolled 10,000 times, the likely amount of occurences for 6 should be between 1,605 and 1728 times. We will reject Ho if 6 is drawn above 1728 times. *should we use 95% to standardize with other trials?*
+
+Below is the graphical binomial distribution of EP1.
+```{r}
+success <- 0:10000
+
+plot(success,dbinom(success,size=10000,prob=.1667),
+     type='h',
+     main='Binomial Distribution (n = 10000, p = 1/6)',
+     ylab='Probability',
+     xlab ='# Occurences',
+     lwd=3)
+```
+
+Hypothesis test EP2: 
+```{r}
+dice.roll <- sample(1:6, size = 10000, replace = TRUE)
+test_ep2 <- table(dice.roll)
+test_ep2
+```
+
+Given an outcome of 1716 occurences of 6, we accept the null hypothesis for EP2. All other sides had an outcome within the range of 1605 and 1728. At a 90% confidence, our numbers are still close to the range floor and ceiling. 
+
+______
+
+
+EP3
+
+For EP3, we are increasing rolls to 100,000 to test the confidence level of 90% and 68%.
+
+Below we determine expected occurences of 6 in a trial of 100,000 rolls.
+```{r}
+n_ep3 = 100000
+occurences_ep3 = theoretical_prob * n_ep3
+occurences_ep3
+```
+Now, we determine standard error for this trial.
+```{r}
+se_ep3 = sqrt(n_ep3*(theoretical_prob*(1-theoretical_prob)))
+se_ep3
+```
+
+In order to determine the range of fair occurences of 6 with confidence level of 90%, we use a z-score of 1.645.
+```{r}
+z_90 = 1.645
+distance_ep3 = se_ep3 * z_90
+floor_ep3 = occurences_ep3 - distance_ep3
+ceiling_ep3 = occurences_ep3 + distance_ep3
+range_ep3 = c(floor_ep3, ceiling_ep3)
+range_ep3
+```
+
+If a fair die is rolled 100,000 times, the likely amount of occurences for 6 should be between 16,473 and 16,861 times. We will reject Ho if 6 is drawn above 16,861 times. *should we use 95% to standardize with other trials?*
+
+Below is the graphical binomial distribution of EP3.
+```{r}
+success <- 0:100000
+
+plot(success,dbinom(success,size=100000,prob=.1667),
+     type='h',
+     main='Binomial Distribution (n = 10000, p = 1/6)',
+     ylab='Probability',
+     xlab ='# Occurences',
+     lwd=3)
+```
+
+Hypothesis test EP3: 
+```{r}
+dice.roll <- sample(1:6, size = 100000, replace = TRUE)
+test_ep3 <- table(dice.roll)
+test_ep3
+```
+
+Given an outcome of 16856 occurences of 6, we accept the null hypothesis for EP3. All other sides had an outcome within the range of 16,473 and 16,861. We will repeat this twice to verify.
+
+Hypothesis test EP3 2.0: 
+```{r}
+dice.roll <- sample(1:6, size = 100000, replace = TRUE)
+test_ep3 <- table(dice.roll)
+test_ep3
+```
+
+Given an outcome of 16552 occurences of 6, we accept the null hypothesis for EP3. All other sides had an outcome within the range of 16,473 and 16,861.
+
+Hypothesis test EP3 3.0: 
+```{r}
+dice.roll <- sample(1:6, size = 100000, replace = TRUE)
+test_ep3 <- table(dice.roll)
+test_ep3
+```
+
+Given an outcome of 16694 occurences of 6, we accept the null hypothesis for EP3. All other sides had an outcome within the range of 16,473 and 16,861.
+
+Conclusion:
+The rule of large numbers hold for our experimental protocols. Increasing the sample size gave us a guarantee that our range of outputs would be closer to the theoretical mean of 16.7% per side. 
