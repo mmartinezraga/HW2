@@ -1,0 +1,63 @@
+---
+title: "Homework 2"
+author: Patrick Sinclair
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+options(digits = 3)
+library("ggplot2")
+library("readr")
+set.seed(1)
+die <- 1:6
+roll <- sample(die, size = 30, replace = TRUE)
+roll2 <- sample(die, size = 100, replace = TRUE)
+```
+
+### Experiment Protocol Analysis
+
+**Possible Protocols**  
+
+*PP1*  
+Roll die once, if $X = 6$, then conclude the die is unfair. If $X = 1, 2, 3, 4, 5$, then conclude the die is fair.
+
+With such a small sample, the probability that we would determine what is actually a fair die to be unfair is (1/6). Conversely, if the die were unfair, the probability that we would deem it to be fair is  < 5/6. Depending on the weightedness of the die, that probability could even be zero.
+
+*PP2*  
+Roll die 30 times.
+
+Decision Rule: E(X = 6) = 1/6 * 30 = `r 1/6 * 30`. If we observe 6 approximately five times, we can conclude that the die is fair.
+
+Were we to roll a fair die, we would expect to observe a 6 on five occasions. We can approach the problem using a binomial distribution - we either observe a 6, classified as a success, or we do not observe a 6, a failure. We would expect to roll a 6 on five occasions `r dbinom(5, 30, 0.1667, log=FALSE)*100`% of the time. Rolling one more or one less 6 would occur `r dbinom(4, 30, 0.1667, log=FALSE)*100`% and `r dbinom(6, 30, 0.1667, log=FALSE)*100`% of the time, respectively.
+
+Below is a table of probabilities from the binomial distribution:
+
+```{r PP2, echo=FALSE}
+read.csv("PP2outcomes.csv", header = TRUE, strip.white = TRUE, fill = FALSE, nrow = 7)[,1:2]
+```
+
+Our sample size and probability of success is large enough to let us approximate the binomial using the normal distribution. Rolling a 6 from four to six times would occur 37.6% of the time. I conclude that it is not particularly unusual to roll one more or one less 6.
+
+As with one more or less, rolling a 6 on two more or two less occasions sits within 1 standard deviation of the mean. We would expect approximately 68% of our samples to produce a 6 on 3, 4, 5, 6 or 7 occasions. These results are not particularly unusual. Rolling a 6 three more or less times is less common - a 6 occurring twice or eight times are approximately 1.47 standard deviations from the mean of five.
+
+###### Frequency Histogram of PP2 Experiement
+```{r, echo=FALSE}
+roll
+qplot(roll, binwidth = 0.5)
+```  
+
+Referring back to our decision protocol, we determine that the die is fair, having produced a 6 on five occasions. If we have a fair die, using this protocol we have a 62.4% chance of mistakenly classing it as an unfair die.
+
+*PP3*       
+Roll die 100 times.
+
+Decision Rule: As above, E(X=6) = 1/6 * 100 = `r 1/6 * 100`. If we observe 6 approximately seventeen times, we can conclude that the die is fair.
+
+Any conclusion we arrive at does require a level of confidence. Which level of confidence one should use depends on the context. Are we rolling to see who takes first turn at the annual family Monopoly showdown or are we involved in a high stakes craps game?
+
+Let's assume we're facing off against Uncle Joe after the turkey has been carved and we're ok with a confidence level of 80%.
+
+Our sample size lets us approximate a binomial distribution using a normal distribution. Our E(X=6) = `r 1/6 * 100`. We take the critical z-score of alpha = 0.2, multiply by the sampling standard deviation and then add and subtract from out mean: `r 1/6 * 100` +/- `r 1.28*(3.72/sqrt(100))`. Our fair die would produce a 6 between `r (1/6*100)-(1.28*(3.72/sqrt(100)))` and `r (1/6*100)+(1.28*(3.72/sqrt(100)))` occasions, 80% of the time.
+
+While the sample size is sufficiently large, focusing solely on one outcome, rolling a 6, is too myopic to truly determine whether the die is fair or not. If the die was weighted to another number, rolling a 6 may still occur enough times to satisfy the protocol yet we remain ignorant to the fact that other numbers may be occurring at statistically significantly high rates.
