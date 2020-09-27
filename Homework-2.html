@@ -373,30 +373,33 @@ summary {
 <h3>Experiment Protocol Analysis</h3>
 <p><strong>Possible Protocols</strong></p>
 <p><em>PP1</em><br />
-A single die has a sample space of 6 mutually exclusive outcomes (with possible outcomes valued 1-6). For the purpose of this lab, we will consider any outcome (X) with a value of 6 to render the die unfair. Conversely, values of 1-5 will conclude to the die to be fair.</p>
-<p>Roll die once, if <span class="math inline">\(X = 6\)</span>, then conclude the die is unfair. If <span class="math inline">\(X = 1, 2, 3, 4, 5\)</span>, then conclude the die is fair.</p>
-<p>Theoretically, there is a 1/6, or 16.667%, probability of the die being considered unfair and a 5/6, or 83.333%, probability of the die being considered fair.</p>
-<p>With such a small sample, the probability that we would determine what is actually a fair die to be unfair is (1/6). Conversely, if the die were unfair, the probability that we would deem it to be fair is &lt;= 5/6. Depending on the weightiness of the die, that probability could even be zero.</p>
+A single die has a sample space of 6 mutually exclusive outcomes, each valued 1-6. We will roll the die once and draw a conclusion based on the outcome being (X = 6) or (X = 1:5).</p>
+<pre><code>## [1] 2</code></pre>
+<p><strong>Decision Rule</strong><br />
+Null hypothesis <strong>H<sub>0</sub></strong>: Our die is not unfair;<br />
+Alternative hypothesis <strong>H<sub>0</sub></strong>: Our die is unfair;</p>
+<p>If a single roll yields a value of 6, we reject H<sub>0</sub> of a fair die. If the roll yields any value inclusive of 1 to 5, we will fail to reject H<sub>0</sub>.</p>
+<p>The probability of failing to reject H<sub>0</sub> is 0.8333, conversely the probability of rejecting Ho is 0.1667.</p>
+<p><em>Analysis</em><br />
+Theoretically, if the die is fair prior to the experiment, there is a 0.1667 probability of the die being considered unfair and a 0.8333 probability of the die being considered fair. Conversely, if the die were unfair prior to the experiment, the probability that we would deem it to be fair is &lt;0.8333. Depending on the weightiness of the die, that probability would be a value between 0 and 0.8333.</p>
+<p><em>Edit</em><br />
+We came to the conclusion that an unfair die would have a &lt;0.8333 probability of being determined to be fair, based on the assumption that the die was weighted to the outcome (X = 6). However, we have not been given any information to make this assumption. Hence, if the die is unfair to begin with, and weighted to any outcome <strong>other</strong> that (X = 6), then the probability it will be deemed fair under this decision protocol is &gt;0.8333 and depending on the weightedness of the die would approach 1.</p>
 <hr />
-<p><strong>Decision Rule</strong></p>
-<p>Null hypothesis (Ho): Our die is not unfair; not fixed toward 6</p>
-<p>Alternative hypothesis (Ha): Our die is unfair; fixed toward 6.</p>
-<p>The rule is as follows: If a single roll yields a value of 6, we reject the null hypothesis of a fair die. A roll yielding any value between 1-5 inclusive will render an accepted null of a fair die.</p>
-<p>The probabilities of our null hypothesis being accepted or rejected are 5/6 and 1/6, respectively.</p>
+<p><em>PP2</em><br />
+Our number of trials (n) is 30; we will roll the die 30 times. To determine the interval of the number outcomes with the value of 6 that would indicate the die should be considered fair, we are applying a 90% confidence level. If the number of outcomes with a value of 6 is outside this interval, we will consider the die unfair.</p>
 <hr />
-<p><em>PP2</em></p>
-<p>Our number of trials (n) is 30; we will roll the die 30 times. We used a 90% confidence interval to determine the threshold of occurrences of rolling a value of 6 where the die would be considered fair. Statistically significant deviation from this value will consider the die unfair.</p>
+<p><strong>Decision Rule</strong><br />
+E(X = 6) = 1/6 * 30 = 5. If we observe 6 approximately five times, we can conclude that the die is fair.</p>
 <hr />
-<p><strong>Decision Rule</strong> E(X = 6) = 1/6 * 30 = 5. If we observe 6 approximately five times, we can conclude that the die is fair.</p>
-<hr />
-<p><strong><em>Theoretical Calculation</em></strong> Null hypothesis (Ho): Our die is not unfair; not fixed toward 6</p>
-<p>Alternative hypothesis (Ha): Our die is unfair; fixed toward 6.</p>
+<p><strong><em>Theoretical Calculation</em></strong><br />
+<strong>H<sub>0</sub></strong>: Our die is not unfair; not fixed toward 6.<br />
+<strong>H<sub>A</sub></strong>: Our die is unfair; fixed toward 6.</p>
 <p><strong><em>Mean, Variance, Standard Deviation</em></strong></p>
 <p>μ = np0 = 30 * 1/6 = 5</p>
 <p>σ^2 = np0(1 - p0) = 30 * 1/6 * 5/6 = 25/6</p>
 <p>σ = sqrt(np0(1-p0)) = sqrt(25/6) ≈ 2.041241</p>
 <p><strong><em>Significance Level</em></strong></p>
-<p>α = .05</p>
+<p>α = 0.10; α/2 = 0.05</p>
 <p><strong><em>Critical P</em></strong></p>
 <p>P1 = 1.645</p>
 <p><strong><em>Decision Criteria</em></strong></p>
@@ -405,12 +408,12 @@ A single die has a sample space of 6 mutually exclusive outcomes (with possible 
 <p><strong><em>Test Criteria</em></strong></p>
 <p>μ - P1σ = 1.642159 -&gt; 1</p>
 <p>μ + P1σ = 8.357841 -&gt; 9</p>
-<p>If the number of successes is less than or equal to 1 or greater than or equal to 9, we reject the null hypothesis as false</p>
-<p>If the number of success is at least 2 and at most 8, we accept the null hypothesis as true.</p>
+<p>If the number of successes <span class="math inline">\(\leq 1\)</span> or <span class="math inline">\(\geq 9\)</span>, we reject H<sub>0</sub> as false.</p>
+<p>If the number of successes <span class="math inline">\(\geq 2\)</span> or <span class="math inline">\(\leq 8\)</span> , we fail to reject H<sub>0</sub>.</p>
 <p><strong><em>Conclusion</em></strong></p>
-<p>For a confidence of 90% and rolling a die 30 times, if a value of 6 occurs between 2 and 8 times, the dice is considered to be fair. Else, the dice is considered to be unfair.</p>
+<p>For n = 30, with a confidence level of 90%, if a value of 6 occurs between 2 and 8 times, the dice is considered to be fair.</p>
 <p><strong><em>R-Simulated Calculation</em></strong></p>
-<p>Our number of trials (n) is 30; we will roll the die 30 times. We used a 90% confidence interval to determine the threshold of occurrences of rolling a value of 6 where the die would be considered fair. Statistically significant deviation from this value will consider the die unfair.</p>
+<p>Our number of trials (n) is 30; we will roll the die 30 times. We used a 90% confidence interval to determine the threshold of occurrences of rolling a value of 6 where the die would be considered fair. Statistically significant deviation from the expected number of outcomes with a value of 6 will render the die unfair.</p>
 <hr />
 <p>Below we determine expected occurrences of 6 in a trial of 30 rolls.</p>
 <pre class="r"><code>theoretical_prob = 1/6
@@ -433,18 +436,18 @@ range_pp2 = c(floor_pp2, ceiling_pp2)</code></pre>
 <pre class="r"><code>range_pp2</code></pre>
 <pre><code>## [1] 1.642158 8.357842</code></pre>
 <hr />
-<p>If a fair die is rolled 30 times, the likely amount of occurrences for 6 should be between 2 and 8 times, inclusive. We will reject Ho if 6 is drawn less than 2 times or more than 8 times.</p>
+<p>If a fair die is rolled 30 times, the likely amount of occurrences for 6 should be between 2 and 8 times, inclusive. We will reject H<sub>0</sub> if 6 is drawn less than 2 times or more than 8 times.</p>
 <hr />
 <pre class="r"><code>dice.roll &lt;- sample(1:6, size = 30, replace = TRUE)
 test_pp2 &lt;- table(dice.roll)
 test_pp2</code></pre>
 <pre><code>## dice.roll
 ## 1 2 3 4 5 6 
-## 5 9 2 5 3 6</code></pre>
-<p>Given an outcome of 4 occurrences of value 6, we accept the null hypothesis for PP2. All other sides also had an outcome within the range of 2 and 8.</p>
+## 5 6 7 3 5 4</code></pre>
+<p>Given an outcome of 4 occurrences of value 6, we fail to reject H<sub>0</sub> for PP2. All other sides also had an outcome within the range of 2 and 8.</p>
 <hr />
 <p>PP3</p>
-<p>For our third possible protocol, our number of trials (n) is 100. We used a 90% confidence interval to determine the range of occurrences of 6 where the die would be considered fair. Anything beyond that range will be deemed unfair. We kept a 90% confidence level to maintain homogeny in our experiments.</p>
+<p>For our third possible protocol, n = 100. To determine the interval of the number outcomes with the value of 6 that would indicate the die should be considered fair, we are applying a 90% confidence level. If the number of outcomes with a value of 6 is outside this interval, we will consider the die unfair. We kept a 90% confidence level to maintain consistency across our experiments.</p>
 <hr />
 <p>Below we determine expected occurrences of 6 in a trial of 100 rolls.</p>
 <pre class="r"><code>theoretical_prob = 1/6
@@ -467,7 +470,7 @@ range_pp3 = c(floor_pp3, ceiling_pp3)
 range_pp3</code></pre>
 <pre><code>## [1] 10.53611 22.79722</code></pre>
 <hr />
-<p>If a fair die is rolled 100 times, the likely amount of occurrences for 6 should be between 10 and 23 times. We reject the null hypothesis if the the number of occurrences of value 6 proves less than 10 or more than 23 times.</p>
+<p>If a fair die is rolled 100 times, the likely amount of occurrences for 6 should be between 10 and 23 times. We reject H<sub>0</sub> if the the number of occurrences of value 6 proves <span class="math inline">\(\leq 10\)</span> or <span class="math inline">\(\geq 23\)</span>.</p>
 <hr />
 <p>Hypothesis test PP3:</p>
 <pre class="r"><code>dice.roll &lt;- sample(1:6, size = 100, replace = TRUE)
@@ -475,8 +478,8 @@ test_pp3 &lt;- table(dice.roll)
 test_pp3</code></pre>
 <pre><code>## dice.roll
 ##  1  2  3  4  5  6 
-## 20 12 12 23 19 14</code></pre>
-<p>Our results from the test yield a number of occurrences of 6 within the identified range, thus we fail to reject the null hypothesis.</p>
+## 17 14 17 21 13 18</code></pre>
+<p>Our results from the test yield a number of occurrences of 6 within the identified range, thus we fail to reject H<sub>0</sub>.</p>
 </div>
 
 
