@@ -1,9 +1,8 @@
----
-title: "Homework 2"
-author: "M. Martinez-Raga, P. Sinclair, D. Gay"
-date: "9/20/2020"
-output: html_document
----
+Homework 2
+================
+M. Martinez-Raga, P. Sinclair, D. Gay
+9/20/2020
+
 ### Experiment Protocol Analysis
 
 **Possible Protocols**  
