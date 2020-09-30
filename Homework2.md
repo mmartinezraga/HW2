@@ -1,8 +1,3 @@
-HW2
-================
-Dorothy Gay, Monica Martinez-Raga, Patrick Sinclair
-9/30/2020
-
 # Homework 2
 
 M. Martinez-Raga, P. Sinclair, D. Gay 9/20/2020
